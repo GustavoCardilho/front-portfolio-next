@@ -36,7 +36,10 @@ export const ProjectsHome = async () => {
     <div className="w-full min-h-[500px] flex items-center justify-center flex-row flex-wrap gap-6 mt-6">
       {repositoriesGithub &&
         repositoriesGithub.map((repository) => (
-          <Card className="md:min-h-[320px] md:min-w-[320px] md:max-h-[320px] md:max-w-[320px] w-[90%] max-h-[320px] bg-inherit text-white font-montserrat">
+          <Card
+            key={repository.id}
+            className="md:min-h-[320px] md:min-w-[320px] md:max-h-[320px] md:max-w-[320px] w-[90%] max-h-[320px] bg-inherit text-white font-montserrat"
+          >
             <CardHeader>
               <CardTitle>{repository.name}</CardTitle>
               <CardDescription className="text-gray-500 font-bold">
