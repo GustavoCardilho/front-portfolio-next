@@ -1,17 +1,13 @@
 import Image from "next/image";
 import fundo from "@/assets/fundocomlistrasbrancas.png";
 import logo from "@/assets/logosemfundobranca.png";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { Github, Linkedin, Info } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
+import { HoverInfo } from "./hoverinfo";
 
 export const OpeningHome = () => {
   return (
     <div className="w-full h-[950px] relative flex items-center justify-center">
-      <div className="w-full h-full flex items-center justify-center absolute inset-0 pointer-events-none select-none">
+      <div className="w-full h-full items-center justify-center absolute inset-0 pointer-events-none select-none md:flex hidden">
         <Image
           src={fundo}
           alt="fundo com listas brancas"
@@ -24,23 +20,16 @@ export const OpeningHome = () => {
         </div>
 
         <div className="min-w-[300px] flex flex-col gap-2 ml-6 mr-6">
-          <HoverCard>
-            <HoverCardTrigger className="w-[320px]">
-              <Info className="text-gray-500" size={20} />
-            </HoverCardTrigger>
-            <HoverCardContent className="w-80">
-              Tecnologias utilizadas nesse site: NextJS, TailwindCSS, Shadcn/ui
-            </HoverCardContent>
-          </HoverCard>
+          <HoverInfo />
           <div>
-            <h1 className="text-3xl text-white font-righteous font-medium">
+            <h1 className="text-3xl text-white font-righteous font-medium md:text-start text-center">
               Gustavo Cardilho Developer
             </h1>
-            <p className="text-sm text-gray-400 font-righteous">
+            <p className="text-sm text-gray-400 font-righteous md:mt-0 mt-8 md:text-start text-center">
               {"> "}Desenvolvedor back-end apaixonado por tecnologia {"<3"}
             </p>
           </div>
-          <div className="w-full flex flex-row gap-4">
+          <div className="w-full flex flex-row gap-4 md:justify-start md:align-start justify-center items-center">
             <button className="bg-white text-black font-righteous font-medium text-xl p-2 rounded transition-colors hover:bg-gray-200 inline">
               Projetos
             </button>
