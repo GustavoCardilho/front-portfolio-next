@@ -30,7 +30,7 @@ interface Owner {
   site_admin: boolean;
 }
 
-interface IRepositoriesGithub {
+export interface IRepositoriesGithub {
   id: number;
   node_id: string;
   name: string;
@@ -50,9 +50,9 @@ interface RepositoriesGithubContext {
   >;
 }
 
-const RepositoriesGithubContext = createContext({} as any);
+const RepositoriesGithubContext = createContext({} as RepositoriesGithubContext);
 
-export const useEquipmentEdit = () => {
+export const useRepositoriesGithub = () => {
   return useContext(RepositoriesGithubContext);
 };
 
@@ -61,10 +61,10 @@ export const RepositoriesGithubProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [item, setItem] = useState<IRepositoriesGithub | undefined>();
+  const [repositoriesGithub, setRepositoriesGithub] = useState<IRepositoriesGithub | undefined>();
 
   return (
-    <RepositoriesGithubContext.Provider value={{ item, setItem }}>
+    <RepositoriesGithubContext.Provider value={{ repositoriesGithub, setRepositoriesGithub }}>
       {children}
     </RepositoriesGithubContext.Provider>
   );
