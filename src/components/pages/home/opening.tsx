@@ -1,7 +1,12 @@
 import Image from "next/image";
 import fundo from "@/assets/fundocomlistrasbrancas.png";
 import logo from "@/assets/logosemfundobranca.png";
-import { Github, Linkedin } from "lucide-react";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { Github, Linkedin, Info } from "lucide-react";
 
 export const OpeningHome = () => {
   return (
@@ -19,6 +24,14 @@ export const OpeningHome = () => {
         </div>
 
         <div className="min-w-[300px] flex flex-col gap-2 ml-6 mr-6">
+          <HoverCard>
+            <HoverCardTrigger className="w-[320px]">
+              <Info className="text-gray-500" size={20} />
+            </HoverCardTrigger>
+            <HoverCardContent className="w-80">
+              Tecnologias utilizadas nesse site: NextJS, TailwindCSS, Shadcn/ui
+            </HoverCardContent>
+          </HoverCard>
           <div>
             <h1 className="text-3xl text-white font-righteous font-medium">
               Gustavo Cardilho Developer
