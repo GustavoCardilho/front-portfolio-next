@@ -15,9 +15,9 @@ import { Badge } from "@/components/ui/badge";
 const findRepositoriesGithub = async () => {
   try {
     const result: IAxiosRepositoriesGithub = await axios.get(
-      "https://api.github.com/users/Kyoudan/repos"
+      ""
     );
-
+/*     "https://api.github.com/users/Kyoudan/repos" */
     result.data.forEach((repository, index) => {
       if (repository.name == "Kyoudan") {
         result.data.splice(index, 1);
@@ -28,12 +28,17 @@ const findRepositoriesGithub = async () => {
       const language: { data: Object } = await axios.get(
         repository.languages_url
       );
-      result.data[index].language = Object.keys(language.data);
+      console.log(result.data[index]);
+      console.log(Object.keys(language.data));
+      result.data[index].language = await Object.keys(language.data);
     });
 
+    console.log("Requisição");
+
     return result.data;
-  } catch (err) {
-    console.log("Err", err);
+  } catch (err: any) {
+    console.log("Req");
+    return;
   }
 };
 
@@ -61,6 +66,8 @@ export const ProjectsHome = async () => {
                 <p>Languages:</p>
                 <div className="w-full flex flex-row flex-wrap gap-2 ">
                   {repository.language &&
+                    repository.language.length > 0 &&
+                    Array.isArray(repository.language) &&
                     repository.language.map((language) => (
                       <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
                         {language}
