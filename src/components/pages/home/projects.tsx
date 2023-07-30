@@ -10,6 +10,7 @@ import axios from "axios";
 import { IAxiosRepositoriesGithub } from "./types/repositoriesGithub";
 import { Button } from "@/components/ui/button";
 import { Link } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const findRepositoriesGithub = async () => {
   try {
@@ -21,6 +22,13 @@ const findRepositoriesGithub = async () => {
       if (repository.name == "Kyoudan") {
         result.data.splice(index, 1);
       }
+    });
+
+    result.data.forEach(async (repository, index) => {
+      const language: { data: Object } = await axios.get(
+        repository.languages_url
+      );
+      result.data[index].language = Object.keys(language.data);
     });
 
     return result.data;
@@ -48,7 +56,19 @@ export const ProjectsHome = async () => {
                   : "Não tem descrição"}
               </CardDescription>
             </CardHeader>
-            <CardContent></CardContent>
+            <CardContent>
+              <div className="w-full bg-zinc-900 rounded p-2">
+                <p>Languages:</p>
+                <div className="w-full flex flex-row flex-wrap gap-2 ">
+                  {repository.language &&
+                    repository.language.map((language) => (
+                      <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
+                        {language}
+                      </Badge>
+                    ))}
+                </div>
+              </div>
+            </CardContent>
             <CardFooter>
               <Button className="w-full bg-white text-black font-bold hover:bg-gray-200 flex flex-row items-center justify-center">
                 <a href={repository.url}>
@@ -60,7 +80,7 @@ export const ProjectsHome = async () => {
           </Card>
         ))}
 
-      {/* <Card className="md:min-h-[320px] md:min-w-[320px] md:max-h-[320px] md:max-w-[320px] w-[90%] max-h-[320px] bg-inherit text-white font-montserrat">
+      <Card className="md:min-h-[320px] md:min-w-[320px] md:max-h-[320px] md:max-w-[320px] w-[90%] max-h-[320px] bg-inherit text-white font-montserrat border-gray-700 hover:border-white transition-all border-dashed flex flex-col justify-between">
         <CardHeader>
           <CardTitle>Teste</CardTitle>
           <CardDescription className="text-gray-500 font-bold">
@@ -68,14 +88,33 @@ export const ProjectsHome = async () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Card Content</p>
+          <div className="w-full bg-zinc-900 rounded p-2">
+            <p>Languages:</p>
+            <div className="w-full flex flex-row flex-wrap gap-2 ">
+              <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
+                Typescript
+              </Badge>
+              <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
+                CSS
+              </Badge>
+              <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
+                Java
+              </Badge>
+              <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
+                Objective-C
+              </Badge>
+            </div>
+          </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full bg-white text-black font-bold hover:bg-gray-200">
-            <Link className="mr-2 h-4 w-4" /> Repositorio
+          <Button className="w-full bg-white text-black font-bold hover:bg-gray-200 flex flex-row items-center justify-center">
+            <a href="#">
+              <Link className="mr-2 h-4 w-4" />
+            </a>
+            <p>Repositorio</p>
           </Button>
         </CardFooter>
-      </Card> */}
+      </Card>
     </div>
   );
 };

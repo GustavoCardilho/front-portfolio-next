@@ -30,8 +30,10 @@ export interface IRepositoriesGithub {
   description: string;
   fork: boolean;
   url: string;
+  languages_url: string;
+  language?: Array<string>;
 }
 
 export interface IAxiosRepositoriesGithub {
-    data: IRepositoriesGithub[];
+  data: IRepositoriesGithub[];
 }
