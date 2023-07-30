@@ -50,10 +50,11 @@ export const ProjectsHome = async () => {
             </CardHeader>
             <CardContent></CardContent>
             <CardFooter>
-              <Button className="w-full bg-white text-black font-bold hover:bg-gray-200">
+              <Button className="w-full bg-white text-black font-bold hover:bg-gray-200 flex flex-row items-center justify-center">
                 <a href={repository.url}>
-                  <Link className="mr-2 h-4 w-4" /> Repositorio
+                  <Link className="mr-2 h-4 w-4" />
                 </a>
+                <p>Repositorio</p>
               </Button>
             </CardFooter>
           </Card>
