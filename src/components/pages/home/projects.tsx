@@ -10,7 +10,7 @@ import axios from "axios";
 import { IAxiosRepositoriesGithub } from "./types/repositoriesGithub";
 import { Button } from "@/components/ui/button";
 import { Link } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { BadgesComponentHome } from "./components/badges";
 
 const findRepositoriesGithub = async () => {
   try {
@@ -29,14 +29,8 @@ const findRepositoriesGithub = async () => {
         repository.languages_url
       );
 
-      result.data[index].language = await Object.keys(language.data);
-      console.log(result.data[index]);
-      console.log(Object.keys(language.data));
-      console.log("É array?", Array.isArray(result.data[index].language));
-      console.log("Array", result.data[index].language);
+      result.data[index].language = Object.keys(language.data);
     });
-
-    console.log("Requisição");
 
     return result.data;
   } catch (err: any) {
@@ -68,17 +62,7 @@ export const ProjectsHome = async () => {
               <div className="w-full bg-zinc-900 rounded p-2">
                 <p>Languages:</p>
                 <div className="w-full flex flex-row flex-wrap gap-2 ">
-                  {repository.language &&
-                    repository.language.length > 0 &&
-                    Array.isArray(repository.language) &&
-                    repository.language.map((language) => (
-                      <Badge
-                        className="bg-zinc-800 cursor-default hover:bg-zinc-700"
-                        key={language}
-                      >
-                        {language}
-                      </Badge>
-                    ))}
+                  <BadgesComponentHome languages={repository.language} />
                 </div>
               </div>
             </CardContent>

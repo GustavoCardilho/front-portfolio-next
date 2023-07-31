@@ -26,58 +26,65 @@ const verify = Axval.verify({
 console.log(verify);
     `
   );
-  const [codeResult, setCodeResult] = useState("");
+  const [codeResult, setCodeResult] = useState("> Console do código\n");
 
   const handleContainer = async () => {
-    setIsLoading(true);
-    const webContainer = await getWebContainerInstance();
+    try {
+      setIsLoading(true);
+      setCodeResult("Carregando...");
+      const webContainer = await getWebContainerInstance();
 
-    await webContainer.mount({
-      "index.ts": {
-        file: {
-          contents: code,
+      await webContainer.mount({
+        "index.ts": {
+          file: {
+            contents: code,
+          },
         },
-      },
-      "package.json": {
-        file: {
-          contents: JSON.stringify({
-            name: "example-app",
-            dependencies: {
-              axval: "^1.2.0",
-              "ts-node-dev": "^2.0.0",
-            },
-            scripts: {
-              start: "tsnd --respawn --transpile-only index.ts",
-            },
-          }),
+        "package.json": {
+          file: {
+            contents: JSON.stringify({
+              name: "example-app",
+              dependencies: {
+                axval: "^1.2.0",
+                "ts-node-dev": "^2.0.0",
+              },
+              scripts: {
+                start: "tsnd --respawn --transpile-only index.ts",
+              },
+            }),
+          },
         },
-      },
-    });
+      });
 
-    const install = await webContainer.spawn("npm", ["i"]);
+      const install = await webContainer.spawn("npm", ["i"]);
 
-    install.output.pipeTo(
-      new WritableStream({
-        write(data) {
-          setCodeResult(data + "\n");
-        },
-      })
-    );
+      install.output.pipeTo(
+        new WritableStream({
+          write(data) {
+            setCodeResult(data + "\n");
+          },
+        })
+      );
 
-    if ((await install.exit) !== 0) {
-      console.error("Erro no install");
+      if ((await install.exit) !== 0) {
+        console.error("Erro no install");
+      }
+
+      const start = await webContainer.spawn("npm", ["start"]);
+
+      start.output.pipeTo(
+        new WritableStream({
+          write(data) {
+            setCodeResult(data + "\n");
+          },
+        })
+      );
+      setIsLoading(false);
+    } catch (err: any) {
+      setIsLoading(false);
+      console.error(err);
+      setCodeResult(err.message);
     }
-
-    const start = await webContainer.spawn("npm", ["start"]);
-
-    start.output.pipeTo(
-      new WritableStream({
-        write(data) {
-          setCodeResult(data + "\n");
-        },
-      })
-    );
-    setIsLoading(false);
   };
 
   return (
