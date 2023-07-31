@@ -15,9 +15,9 @@ import { Badge } from "@/components/ui/badge";
 const findRepositoriesGithub = async () => {
   try {
     const result: IAxiosRepositoriesGithub = await axios.get(
-      ""
+      "https://api.github.com/users/Kyoudan/repos"
     );
-/*     "https://api.github.com/users/Kyoudan/repos" */
+    /*     "https://api.github.com/users/Kyoudan/repos" */
     result.data.forEach((repository, index) => {
       if (repository.name == "Kyoudan") {
         result.data.splice(index, 1);
@@ -28,9 +28,12 @@ const findRepositoriesGithub = async () => {
       const language: { data: Object } = await axios.get(
         repository.languages_url
       );
+
+      result.data[index].language = await Object.keys(language.data);
       console.log(result.data[index]);
       console.log(Object.keys(language.data));
-      result.data[index].language = await Object.keys(language.data);
+      console.log("É array?", Array.isArray(result.data[index].language));
+      console.log("Array", result.data[index].language);
     });
 
     console.log("Requisição");
@@ -51,7 +54,7 @@ export const ProjectsHome = async () => {
         repositoriesGithub.map((repository) => (
           <Card
             key={repository.id}
-            className="md:min-h-[320px] md:min-w-[320px] md:max-h-[320px] md:max-w-[320px] w-[90%] max-h-[320px] bg-inherit text-white font-montserrat"
+            className="md:min-h-[320px] md:min-w-[320px] md:max-h-[320px] md:max-w-[320px] w-[90%] max-h-[320px] bg-inherit text-white font-montserrat border-gray-700 hover:border-white transition-all border-dashed flex flex-col justify-between"
           >
             <CardHeader>
               <CardTitle>{repository.name}</CardTitle>
@@ -69,7 +72,10 @@ export const ProjectsHome = async () => {
                     repository.language.length > 0 &&
                     Array.isArray(repository.language) &&
                     repository.language.map((language) => (
-                      <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
+                      <Badge
+                        className="bg-zinc-800 cursor-default hover:bg-zinc-700"
+                        key={language}
+                      >
                         {language}
                       </Badge>
                     ))}
@@ -87,7 +93,7 @@ export const ProjectsHome = async () => {
           </Card>
         ))}
 
-      <Card className="md:min-h-[320px] md:min-w-[320px] md:max-h-[320px] md:max-w-[320px] w-[90%] max-h-[320px] bg-inherit text-white font-montserrat border-gray-700 hover:border-white transition-all border-dashed flex flex-col justify-between">
+      {/*< Card className="md:min-h-[320px] md:min-w-[320px] md:max-h-[320px] md:max-w-[320px] w-[90%] max-h-[320px] bg-inherit text-white font-montserrat border-gray-700 hover:border-white transition-all border-dashed flex flex-col justify-between">
         <CardHeader>
           <CardTitle>Teste</CardTitle>
           <CardDescription className="text-gray-500 font-bold">
@@ -121,7 +127,7 @@ export const ProjectsHome = async () => {
             <p>Repositorio</p>
           </Button>
         </CardFooter>
-      </Card>
+      </Card> */}
     </div>
   );
 };

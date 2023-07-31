@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import "@uiw/react-textarea-code-editor/dist.css";
 import { getWebContainerInstance } from "@/utils/web-container";
+import { Zap } from "lucide-react";
+import "./styles/loading.css";
 
 const CodeEditor = dynamic(
   () => import("@uiw/react-textarea-code-editor").then((mod) => mod.default),
@@ -11,6 +13,7 @@ const CodeEditor = dynamic(
 );
 
 export const AxvalHome = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [code, setCode] = React.useState(
     `import Axval from "axval"; \n
 const verify = Axval.verify({
@@ -26,6 +29,7 @@ console.log(verify);
   const [codeResult, setCodeResult] = useState("");
 
   const handleContainer = async () => {
+    setIsLoading(true);
     const webContainer = await getWebContainerInstance();
 
     await webContainer.mount({
@@ -55,7 +59,7 @@ console.log(verify);
     install.output.pipeTo(
       new WritableStream({
         write(data) {
-          console.log("install", data);
+          setCodeResult(data + "\n");
         },
       })
     );
@@ -64,57 +68,80 @@ console.log(verify);
       console.error("Erro no install");
     }
 
-    const verifyDependencies = await webContainer.spawn("npm", ["list"]);
-
-    verifyDependencies.output.pipeTo(
-      new WritableStream({
-        write(data) {
-          console.log("lista", data);
-        },
-      })
-    );
-
-    if ((await verifyDependencies.exit) !== 0) {
-      console.error("Erro nas dependencias");
-    }
-
     const start = await webContainer.spawn("npm", ["start"]);
 
     start.output.pipeTo(
       new WritableStream({
         write(data) {
-          console.log("start", data);
           setCodeResult(data + "\n");
         },
       })
     );
-
-    return (
-      <div>
-        <h1>oi</h1>
-      </div>
-    );
+    setIsLoading(false);
   };
 
   return (
     <>
-      <div className="w-full h-[500px] flex items-center justify-center">
-        <CodeEditor
-          value={code}
-          language="js"
-          placeholder="Please enter JS code."
-          onChange={(evn) => setCode(evn.target.value)}
-          padding={15}
-          style={{
-            fontSize: 18,
-            fontFamily: "montserrat",
-          }}
-          className="rounded border border-gray-500 border-dashed font-montserrat  bg-gradient-to-r from-white to-zinc-300 font-bold"
-        />
-        <button onClick={handleContainer} className="text-white">
-          click
-        </button>
-        <p className="text-white"> {codeResult}</p>
+      <div className="w-full lg:h-[500px] min-h-[300px] flex items-center justify-center flex-col gap-2">
+        <div className="">
+          <div className="w-full h-full flex lg:flex-row flex-col gap-2 items-center justify-center flex-wrap">
+            <CodeEditor
+              value={code}
+              language="js"
+              placeholder="Please enter JS code."
+              onChange={(evn) => setCode(evn.target.value)}
+              padding={15}
+              style={{
+                fontSize: 18,
+                fontFamily: "montserrat",
+                color: "#fff",
+                height: "100%",
+              }}
+              className="rounded border border-gray-500 border-dashed font-montserrat  bg-zinc-900 lg:w-[500px] w-[95vw]"
+            />
+            <div className="h-full">
+              <div className="bg-zinc-950 border-x border-b border-gray-500 border-dashed lg:w-[500px] w-[95vw] lg:h-full p-2 overflow-x-hidden">
+                <div className="text-white font-montserrat">
+                  <div className="w-full p-2 flex flex-row gap-2 bg-zinc-850 border border-gray-500 border-dashed">
+                    <img
+                      src="https://cdn.jsdelivr.net/npm/programming-languages-logos/src/typescript/typescript.png"
+                      alt="Logo typescript"
+                      height={20}
+                      width={20}
+                    ></img>
+                    <h1 className="w-full font-montserrat font-bold text-blue-600 pl-2">
+                      index.ts
+                    </h1>
+                  </div>{" "}
+                  <p className="max-w-full flex-wrap">
+                    {" "}
+                    {codeResult ? codeResult : ""}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {!isLoading ? (
+            <button
+              onClick={handleContainer}
+              className="text-gray-500 rounded w-full bg-white mt-4"
+            >
+              <div className="w-full flex items-center justify-center p-2 gap-2 flex-row">
+                <Zap />
+                Run Code
+              </div>
+            </button>
+          ) : (
+            <button
+              onClick={handleContainer}
+              className="text-gray-500 rounded w-full bg-white mt-4"
+            >
+              <div className="w-full flex items-center justify-center p-2 gap-2 flex-row">
+                <div className="loading-spinner"></div>
+              </div>
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
