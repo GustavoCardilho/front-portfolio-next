@@ -18,9 +18,7 @@ const getTechs = async () => {
       "https://gist.githubusercontent.com/Kyoudan/d4fe3a38ea022025d42d7f578977a6b2/raw/680ce3aaf712704157975350f8234cc3d1cb58bc/programming.json"
     );
 
-    if (!response) return;
-
-    console.log(response.data.languages[0]);
+    if (!response) return;;
 
     return response;
   } catch (err) {
@@ -39,8 +37,8 @@ export const TechsHome = async () => {
       <div className="w-full flex lg:flex-row flex-col gap-8 lg:max-w-[500px] max-w-[90%] flex-wrap text-white items-center justify-center">
         {tecnologias &&
           tecnologias.data &&
-          tecnologias.data.languages.map((item) => (
-            <HoverInfoTechsComponent img={item.img} text={item.language} />
+          tecnologias.data.languages.map((item, index) => (
+            <HoverInfoTechsComponent img={item.img} text={item.language} key={index}/>
           ))}
       </div>
     </div>
