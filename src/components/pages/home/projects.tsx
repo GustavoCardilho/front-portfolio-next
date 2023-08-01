@@ -15,7 +15,6 @@ import {
 } from "./types/repositoriesGithub";
 import { Button } from "@/components/ui/button";
 import { Link } from "lucide-react";
-import { BadgesComponentHome } from "./components/badges";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 
@@ -28,7 +27,7 @@ export const ProjectsHome = () => {
   const findRepositoriesGithub = async () => {
     try {
       const result: IAxiosRepositoriesGithub = await axios.get(
-        ""
+        "https://api.github.com/users/Kyoudan/repos"
       );
       /*     "https://api.github.com/users/Kyoudan/repos" */
       result.data.forEach((repository, index) => {
@@ -91,8 +90,8 @@ export const ProjectsHome = () => {
                 <p>Languages:</p>
                 <div className="w-full flex flex-row flex-wrap gap-2 ">
                   {languagesArray[index] &&
-                    languagesArray[index].map((language) => (
-                      <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
+                    languagesArray[index].map((language, index) => (
+                      <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700" key={index}>
                         {language}
                       </Badge>
                     ))}
