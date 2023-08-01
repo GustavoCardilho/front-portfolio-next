@@ -34,63 +34,67 @@ console.log(verify);
     try {
       setIsLoading(true);
       setCodeResult([]);
-      setCodeResult(["----------------------------------"]);
-      setCodeResult((prevState) => [...prevState, "Carregando..."]);
-      const webContainer = await getWebContainerInstance();
+      setTimeout(async () => {
+        setCodeResult(["----------------------------------"]);
+        setCodeResult((prevState) => [...prevState, "Carregando..."]);
+        const webContainer = await getWebContainerInstance();
 
-      await webContainer.mount({
-        "index.ts": {
-          file: {
-            contents: code,
+        await webContainer.mount({
+          "index.ts": {
+            file: {
+              contents: code,
+            },
           },
-        },
-        "package.json": {
-          file: {
-            contents: JSON.stringify({
-              name: "example-app",
-              dependencies: {
-                axval: "^1.2.0",
-                "ts-node-dev": "^2.0.0",
-              },
-              scripts: {
-                start: "tsnd --respawn --transpile-only index.ts",
-              },
-            }),
+          "package.json": {
+            file: {
+              contents: JSON.stringify({
+                name: "example-app",
+                dependencies: {
+                  axval: "^1.2.0",
+                  "ts-node-dev": "^2.0.0",
+                },
+                scripts: {
+                  start: "tsnd --respawn --transpile-only index.ts",
+                },
+              }),
+            },
           },
-        },
-      });
+        });
 
-      const install = await webContainer.spawn("npm", ["i"]);
+        const install = await webContainer.spawn("npm", ["i"]);
 
-      setCodeResult((prevState) => {
-        return [...prevState, "> ✨ Instalando dependencias..."];
-      });
+        setCodeResult((prevState) => {
+          return [...prevState, "> ✨ Instalando dependencias..."];
+        });
 
-      install.output.pipeTo(new WritableStream());
+        install.output.pipeTo(new WritableStream());
 
-      if ((await install.exit) !== 0) {
-        console.error("Erro no install");
-        setCodeResult(["!!! Erro ao instalar as dependencias !!!"]);
-        return;
-      }
+        if ((await install.exit) !== 0) {
+          console.error("Erro no install");
+          setCodeResult(["!!! Erro ao instalar as dependencias !!!"]);
+          return;
+        }
 
-      const start = await webContainer.spawn("npm", ["start"]);
+        const start = await webContainer.spawn("npm", ["start"]);
 
-      setCodeResult((prevState) => {
-        return [...prevState, "> 🚀 Iniciando servidor"];
-      });
-      setCodeResult(prevState => [...prevState, "----------------------------------"]);
+        setCodeResult((prevState) => {
+          return [...prevState, "> 🚀 Iniciando servidor"];
+        });
+        setCodeResult((prevState) => [
+          ...prevState,
+          "----------------------------------",
+        ]);
 
+        start.output.pipeTo(
+          new WritableStream({
+            write(data) {
+              setCodeResult((prevState) => [...prevState, data]);
+            },
+          })
+        );
 
-      start.output.pipeTo(
-        new WritableStream({
-          write(data) {
-            setCodeResult((prevState) => [...prevState, data]);
-          },
-        })
-      );
-
-      setIsLoading(false);
+        setIsLoading(false);
+      }, 500);
     } catch (err: any) {
       setIsLoading(false);
       console.error(err);
@@ -132,8 +136,8 @@ console.log(verify);
                     </h1>
                   </div>{" "}
                   {codeResult &&
-                    codeResult.map((log) => (
-                      <p className="max-w-full flex-wrap" key={log}>
+                    codeResult.map((log, index) => (
+                      <p className="max-w-full flex-wrap" key={index}>
                         {log}
                       </p>
                     ))}
