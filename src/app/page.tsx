@@ -1,4 +1,5 @@
 import { MenuComponent } from "@/components/menu";
+import { AboutHome } from "@/components/pages/home/about";
 import { AxvalHome } from "@/components/pages/home/axval";
 import { OpeningHome } from "@/components/pages/home/opening";
 import { ProjectsHome } from "@/components/pages/home/projects";
@@ -9,11 +10,12 @@ export default async function Home() {
     <main className="">
       <MenuComponent />
       <OpeningHome />
-      <p className="text-4xl font-righteous text-center mx-2 text-white">
+      <AboutHome />
+      <p className="text-4xl font-righteous text-center my-12 text-white">
         Destaques - Axval
       </p>
       <AxvalHome />
-      <p className="text-4xl font-righteous text-center mt-12 text-white">
+      <p className="text-4xl font-righteous text-center my-12 text-white">
         Repositorio
       </p>
       <ProjectsHome />
