@@ -2,11 +2,11 @@ import Image from "next/image";
 import fundo from "@/assets/fundocomlistrasbrancas.png";
 import logo from "@/assets/logosemfundobranca.png";
 import { Github, Linkedin } from "lucide-react";
-import { HoverInfo } from "./hoverinfo";
+import { HoverInfoOpeningComponent } from "./components/hoverInfoOpening";
 
 export const OpeningHome = () => {
   return (
-    <div className="w-full h-[950px] relative flex items-center justify-center">
+    <div className="w-full sm:h-[950px] h-[750px] relative flex items-center justify-center">
       <div className="w-full h-full items-center justify-center absolute inset-0 pointer-events-none select-none md:flex hidden">
         <Image
           src={fundo}
@@ -20,7 +20,7 @@ export const OpeningHome = () => {
         </div>
 
         <div className="min-w-[300px] flex flex-col gap-2 ml-6 mr-6">
-          <HoverInfo />
+          <HoverInfoOpeningComponent />
           <div>
             <h1 className="text-3xl text-white font-righteous font-medium md:text-start text-center">
               Gustavo Cardilho Developer

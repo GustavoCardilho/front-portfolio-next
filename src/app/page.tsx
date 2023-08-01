@@ -3,6 +3,7 @@ import { AboutHome } from "@/components/pages/home/about";
 import { AxvalHome } from "@/components/pages/home/axval";
 import { OpeningHome } from "@/components/pages/home/opening";
 import { ProjectsHome } from "@/components/pages/home/projects";
+import { TechsHome } from "@/components/pages/home/techs";
 import Image from "next/image";
 
 export default async function Home() {
@@ -11,6 +12,7 @@ export default async function Home() {
       <MenuComponent />
       <OpeningHome />
       <AboutHome />
+      <TechsHome />
       <p className="text-4xl font-righteous text-center my-12 text-white">
         Destaques - Axval
       </p>

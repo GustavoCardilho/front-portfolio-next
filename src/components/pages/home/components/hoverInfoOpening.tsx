@@ -8,7 +8,7 @@ import {
 import { Info } from "lucide-react";
 import { useState } from "react";
 
-export const HoverInfo = () => {
+export const HoverInfoOpeningComponent = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
