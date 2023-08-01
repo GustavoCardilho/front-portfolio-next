@@ -28,7 +28,7 @@ export const ProjectsHome = () => {
   const findRepositoriesGithub = async () => {
     try {
       const result: IAxiosRepositoriesGithub = await axios.get(
-        "https://api.github.com/users/Kyoudan/repos"
+        ""
       );
       /*     "https://api.github.com/users/Kyoudan/repos" */
       result.data.forEach((repository, index) => {

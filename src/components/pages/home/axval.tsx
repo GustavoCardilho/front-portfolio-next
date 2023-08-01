@@ -26,12 +26,16 @@ const verify = Axval.verify({
 console.log(verify);
     `
   );
-  const [codeResult, setCodeResult] = useState("> Console do código\n");
+  const [codeResult, setCodeResult] = useState<string[]>([
+    "> Console do código\n",
+  ]);
 
   const handleContainer = async () => {
     try {
       setIsLoading(true);
-      setCodeResult("Carregando...");
+      setCodeResult([]);
+      setCodeResult(["----------------------------------"]);
+      setCodeResult((prevState) => [...prevState, "Carregando..."]);
       const webContainer = await getWebContainerInstance();
 
       await webContainer.mount({
@@ -58,27 +62,34 @@ console.log(verify);
 
       const install = await webContainer.spawn("npm", ["i"]);
 
-      install.output.pipeTo(
-        new WritableStream({
-          write(data) {
-            setCodeResult(data + "\n");
-          },
-        })
-      );
+      setCodeResult((prevState) => {
+        return [...prevState, "> ✨ Instalando dependencias..."];
+      });
+
+      install.output.pipeTo(new WritableStream());
 
       if ((await install.exit) !== 0) {
         console.error("Erro no install");
+        setCodeResult(["!!! Erro ao instalar as dependencias !!!"]);
+        return;
       }
 
       const start = await webContainer.spawn("npm", ["start"]);
 
+      setCodeResult((prevState) => {
+        return [...prevState, "> 🚀 Iniciando servidor"];
+      });
+      setCodeResult(prevState => [...prevState, "----------------------------------"]);
+
+
       start.output.pipeTo(
         new WritableStream({
           write(data) {
-            setCodeResult(data + "\n");
+            setCodeResult((prevState) => [...prevState, data]);
           },
         })
       );
+
       setIsLoading(false);
     } catch (err: any) {
       setIsLoading(false);
@@ -107,7 +118,7 @@ console.log(verify);
               className="rounded border border-gray-500 border-dashed font-montserrat  bg-zinc-900 lg:w-[500px] w-[95vw]"
             />
             <div className="h-full">
-              <div className="bg-zinc-950 border-x border-b border-gray-500 border-dashed lg:w-[500px] w-[95vw] lg:h-full p-2 overflow-x-hidden">
+              <div className="bg-zinc-950 border border-gray-500 border-dashed lg:w-[500px] w-[95vw] lg:h-full p-2 overflow-x-hidden">
                 <div className="text-white font-montserrat">
                   <div className="w-full p-2 flex flex-row gap-2 bg-zinc-850 border border-gray-500 border-dashed">
                     <img
@@ -120,10 +131,12 @@ console.log(verify);
                       index.ts
                     </h1>
                   </div>{" "}
-                  <p className="max-w-full flex-wrap">
-                    {" "}
-                    {codeResult ? codeResult : ""}
-                  </p>
+                  {codeResult &&
+                    codeResult.map((log) => (
+                      <p className="max-w-full flex-wrap" key={log}>
+                        {log}
+                      </p>
+                    ))}
                 </div>
               </div>
             </div>
