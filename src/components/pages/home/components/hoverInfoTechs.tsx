@@ -5,23 +5,25 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { User } from "lucide-react";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+
 
 interface IProps {
-  text: string;
-  img: string;
+  name: string;
+  alt: string;
+  key: string | number;
+  children: ReactNode;
 }
 
 export const HoverInfoTechsComponent = (props: IProps) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <HoverCard open={open} onOpenChange={setOpen}>
+    <HoverCard open={open} onOpenChange={setOpen} key={props.key}>
       <HoverCardTrigger onClick={() => setOpen((prevState) => !prevState)}>
-        <User size={30} />
+        {props.children}
       </HoverCardTrigger>
-      <HoverCardContent className="w-80">{props.text}</HoverCardContent>
+      <HoverCardContent className="w-80">{props.name}</HoverCardContent>
     </HoverCard>
   );
 };
