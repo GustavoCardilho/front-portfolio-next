@@ -13,9 +13,7 @@ export default async function Home() {
       <OpeningHome />
       <AboutHome />
       <TechsHome />
-      <p className="text-4xl font-righteous text-center my-12 text-white">
-        Destaques - Axval
-      </p>
+
       <AxvalHome />
       <p className="text-4xl font-righteous text-center my-12 text-white">
         Repositorio
