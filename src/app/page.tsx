@@ -4,7 +4,7 @@ import { AxvalHome } from "@/components/pages/home/axval";
 import { OpeningHome } from "@/components/pages/home/opening";
 import { ProjectsHome } from "@/components/pages/home/projects";
 import { TechsHome } from "@/components/pages/home/techs";
-import Image from "next/image";
+import {OpeningProjectsHome} from '@/components/pages/home/openingProjects'
 
 export default async function Home() {
   return (
@@ -13,7 +13,7 @@ export default async function Home() {
       <OpeningHome />
       <AboutHome />
       <TechsHome />
-
+      <OpeningProjectsHome />
       <AxvalHome />
       <p className="text-4xl font-righteous text-center my-12 text-white">
         Repositorio

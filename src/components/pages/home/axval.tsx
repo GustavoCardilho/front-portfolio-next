@@ -112,7 +112,7 @@ console.log(verify);
 
   return (
     <>
-      <div className="w-full lg:h-[750px] min-h-[300px] flex items-center justify-center flex-col gap-6 overflow-hidden bg-zinc-800 mt-12 mb-1 py-6">
+      <div className="w-full lg:h-[750px] min-h-[300px] flex items-center justify-center flex-col gap-6 overflow-hidden bg-zinc-800/50 mt-12 mb-1 py-6">
         <p className="text-4xl font-righteous text-center   text-white">
           Destaques - Axval
         </p>
