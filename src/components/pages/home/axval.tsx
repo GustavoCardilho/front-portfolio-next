@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import "@uiw/react-textarea-code-editor/dist.css";
 import { getWebContainerInstance } from "@/utils/web-container";
-import { Zap } from "lucide-react";
+import { AlertTriangle, Zap } from "lucide-react";
 import "./styles/loading.css";
 
 const CodeEditor = dynamic(
@@ -145,6 +145,13 @@ console.log(verify);
               </div>
             </div>
           </div>
+          <div className="w-full flex flex-row gap-2 items-center justify-center my-3 flex-wrap sm:hidden ">
+            <AlertTriangle size={30} className=" text-red-600" />
+            <p className="text-lg font-righteous text-center text-red-600  max-w-[90%] mx-6">
+              O Carregamento é lento, é possível que o código não execute em
+              alguns dispositivos
+            </p>
+          </div>
           {!isLoading ? (
             <button
               onClick={handleContainer}
@@ -156,10 +163,7 @@ console.log(verify);
               </div>
             </button>
           ) : (
-            <button
-              onClick={handleContainer}
-              className="text-gray-500 rounded w-full bg-white mt-4"
-            >
+            <button className="text-gray-500 rounded w-full bg-white mt-4">
               <div className="w-full flex items-center justify-center p-2 gap-2 flex-row">
                 <div className="loading-spinner"></div>
               </div>
