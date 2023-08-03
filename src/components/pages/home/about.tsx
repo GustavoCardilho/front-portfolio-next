@@ -6,10 +6,9 @@ export const AboutHome = async () => {
         Sobre mim
       </p>
       <h1 className="text-lg font-montserrat font-bold text-gray-500 text-center max-w-[500px] mx-12">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta alias
-        placeat, voluptatum aliquam commodi ipsum optio ex ducimus sunt iusto,
-        dolorem deserunt magni tempore atque distinctio totam repellat
-        repellendus. Nesciunt?
+        Olá, me chamo Gustavo! sou um desenvolvedor web que ama tecnologia.
+        Estou sempre aprendendo algo novo. Gosto de Back-end, mas sei de tudo um
+        pouco deste mobile, a Java e a web
       </h1>
       <span className="w-[2px] h-[45px] bg-gradient-to-r from-gray-500 to-white-500  rounded-full absolute bottom-[-55px]"></span>
     </div>
