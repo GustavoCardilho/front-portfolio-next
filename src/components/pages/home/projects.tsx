@@ -18,8 +18,13 @@ import { Link } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 
+interface ILanguageArray {
+  id: string | number;
+  languages: string[];
+}
+
 export const ProjectsHome = () => {
-  const [languagesArray, setLanguagesArray] = useState<string[][]>([]);
+  const [languagesArray, setLanguagesArray] = useState<ILanguageArray[]>();
   const [repositoriesGithub, setRepositoriesGithub] = useState<
     IRepositoriesGithub[] | undefined
   >();
@@ -43,9 +48,15 @@ export const ProjectsHome = () => {
 
         setLanguagesArray((prevState) => {
           if (prevState) {
-            return [...prevState, Object.keys(language.data)];
+            return [
+              ...prevState,
+              {
+                id: repository.id,
+                languages: Object.keys(language.data),
+              },
+            ];
           }
-          return [Object.keys(language.data)];
+          return [{ id: repository.id, languages: Object.keys(language.data) }];
         });
       });
 
@@ -89,12 +100,19 @@ export const ProjectsHome = () => {
               <div className="w-full bg-zinc-900 rounded p-2">
                 <p>Languages:</p>
                 <div className="w-full flex flex-row flex-wrap gap-2 ">
-                  {languagesArray[index] &&
-                    languagesArray[index].map((language, index) => (
-                      <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700" key={index}>
-                        {language}
-                      </Badge>
-                    ))}
+                  {languagesArray &&
+                    languagesArray.map(
+                      (language, index) =>
+                        language.id == repository.id &&
+                        language.languages.map((lang) => (
+                          <Badge
+                            className="bg-zinc-800 cursor-default hover:bg-zinc-700"
+                            key={index}
+                          >
+                            {lang}
+                          </Badge>
+                        ))
+                    )}
                 </div>
               </div>
             </CardContent>
