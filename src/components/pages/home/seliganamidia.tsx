@@ -17,7 +17,7 @@ import imagem5 from "@/assets/seliganamidia/imagem5.png";
 import imagem6 from "@/assets/seliganamidia/imagem6.png";
 import imagem7 from "@/assets/seliganamidia/imagem7.png";
 
-export const SeLigaNaMidiaHome = async () => {
+export const SeLigaNaMidiaHome = () => {
   return (
     <div className="w-full flex items-center flex-col gap-6 mt-12 mb-1 py-6 h-[900px] ">
       <div>
@@ -28,7 +28,11 @@ export const SeLigaNaMidiaHome = async () => {
           <Info size={30} className=" text-gray-400" />
           <p className="text-lg font-righteous text-center text-gray-400 lg:max-w-[800px] max-w-[90%] mx-6">
             O Se liga na mídia foi criado para a criação de conteudos
-            jornalisticos produzido no itinerario formativo. Experimente:{" "}
+            jornalisticos produzido no itinerario formativo. Todos os artigos
+            foram produzidos pelos alunos da escola Adherbal de Paula Ferreira.
+            As tecnologias utilizadas foram Vite (React - Typescript), e
+            back-end com NodeJS e Typescript junto ao banco de dados postgres
+            que é gerenciado através do ORM Prisma. Experimente você mesmo:{" "}
             <strong className="text-white tracking-widest">
               <a
                 href="https://seliganamidia.xyz"

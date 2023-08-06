@@ -15,7 +15,7 @@ export const TechsHome = async () => {
           TechsMock.map((item, index) => (
             <>
               <HoverInfoTechsComponent
-                key={index}
+                key={`HoverInfoTechsCompoent-${index}`}
                 alt={item.alt}
                 name={item.name}
               >

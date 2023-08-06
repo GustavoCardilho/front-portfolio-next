@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 
 export const ProjectsHome = () => {
+  const [isFetch, setIsFetch] = useState<boolean>(false);
   const [repositoriesGithub, setRepositoriesGithub] = useState<
     IRepositoriesGithub[] | undefined
   >();
@@ -41,7 +42,10 @@ export const ProjectsHome = () => {
         );
 
         result.data[index].languageArray = Object.keys(language.data);
+        console.log("languagearray", result.data[index].languageArray);
       });
+
+      setIsFetch(true);
 
       return result.data;
     } catch (err: any) {
@@ -61,7 +65,8 @@ export const ProjectsHome = () => {
 
   return (
     <div className="w-full min-h-[500px] flex items-center justify-center flex-row flex-wrap gap-6 mt-6">
-      {repositoriesGithub &&
+      {isFetch &&
+        repositoriesGithub &&
         repositoriesGithub.map((repository, index) => (
           <Card
             key={repository.id}
@@ -79,11 +84,12 @@ export const ProjectsHome = () => {
               <div className="w-full bg-zinc-900 rounded p-2">
                 <p>Languages:</p>
                 <div className="w-full flex flex-row flex-wrap gap-2 ">
-                  {repository.languageArray &&
+                  {isFetch &&
+                    repository.languageArray &&
                     repository.languageArray.map((lang) => (
                       <Badge
                         className="bg-zinc-800 cursor-default hover:bg-zinc-700"
-                        key={index}
+                        key={`languageArray-${lang}`}
                       >
                         {lang}
                       </Badge>
