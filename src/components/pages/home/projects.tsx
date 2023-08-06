@@ -18,13 +18,8 @@ import { Link } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 
-interface ILanguageArray {
-  id: string | number;
-  languages: string[];
-}
 
 export const ProjectsHome = () => {
-  const [languagesArray, setLanguagesArray] = useState<ILanguageArray[]>();
   const [repositoriesGithub, setRepositoriesGithub] = useState<
     IRepositoriesGithub[] | undefined
   >();
@@ -46,18 +41,8 @@ export const ProjectsHome = () => {
           repository.languages_url
         );
 
-        setLanguagesArray((prevState) => {
-          if (prevState) {
-            return [
-              ...prevState,
-              {
-                id: repository.id,
-                languages: Object.keys(language.data),
-              },
-            ];
-          }
-          return [{ id: repository.id, languages: Object.keys(language.data) }];
-        });
+        result.data[index].languageArray = Object.keys(language.data);
+
       });
 
       return result.data;
@@ -75,10 +60,6 @@ export const ProjectsHome = () => {
   useEffect(() => {
     handleRepositories();
   }, []);
-
-  useEffect(() => {
-    console.log(languagesArray);
-  }, [languagesArray]);
 
   return (
     <div className="w-full min-h-[500px] flex items-center justify-center flex-row flex-wrap gap-6 mt-6">
@@ -100,19 +81,15 @@ export const ProjectsHome = () => {
               <div className="w-full bg-zinc-900 rounded p-2">
                 <p>Languages:</p>
                 <div className="w-full flex flex-row flex-wrap gap-2 ">
-                  {languagesArray &&
-                    languagesArray.map(
-                      (language, index) =>
-                        language.id == repository.id &&
-                        language.languages.map((lang) => (
-                          <Badge
-                            className="bg-zinc-800 cursor-default hover:bg-zinc-700"
-                            key={index}
-                          >
-                            {lang}
-                          </Badge>
-                        ))
-                    )}
+                  {repository.languageArray &&
+                    repository.languageArray.map((lang) => (
+                      <Badge
+                        className="bg-zinc-800 cursor-default hover:bg-zinc-700"
+                        key={index}
+                      >
+                        {lang}
+                      </Badge>
+                    ))}
                 </div>
               </div>
             </CardContent>
@@ -128,41 +105,7 @@ export const ProjectsHome = () => {
           </Card>
         ))}
 
-      {/*< Card className="md:min-h-[320px] md:min-w-[320px] md:max-h-[320px] md:max-w-[320px] w-[90%] max-h-[320px] bg-inherit text-white font-montserrat border-gray-700 hover:border-white transition-all border-dashed flex flex-col justify-between">
-        <CardHeader>
-          <CardTitle>Teste</CardTitle>
-          <CardDescription className="text-gray-500 font-bold">
-            Card Description
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="w-full bg-zinc-900 rounded p-2">
-            <p>Languages:</p>
-            <div className="w-full flex flex-row flex-wrap gap-2 ">
-              <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
-                Typescript
-              </Badge>
-              <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
-                CSS
-              </Badge>
-              <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
-                Java
-              </Badge>
-              <Badge className="bg-zinc-800 cursor-default hover:bg-zinc-700">
-                Objective-C
-              </Badge>
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button className="w-full bg-white text-black font-bold hover:bg-gray-200 flex flex-row items-center justify-center">
-            <a href="#">
-              <Link className="mr-2 h-4 w-4" />
-            </a>
-            <p>Repositorio</p>
-          </Button>
-        </CardFooter>
-      </Card> */}
+
     </div>
   );
 };

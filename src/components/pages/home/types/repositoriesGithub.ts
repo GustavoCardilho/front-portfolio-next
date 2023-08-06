@@ -31,7 +31,8 @@ export interface IRepositoriesGithub {
   fork: boolean;
   url: string;
   languages_url: string;
-  language?: Array<string>;
+  language: string;
+  languageArray: string[]
 }
 
 export interface IAxiosRepositoriesGithub {
