@@ -7,6 +7,7 @@ import { TechsHome } from "@/components/pages/home/techs";
 import { OpeningProjectsHome } from "@/components/pages/home/openingProjects";
 import { SeLigaNaMidiaHome } from "@/components/pages/home/seliganamidia";
 import { Footer } from "@/components/footer/footer";
+import { ServicesHome } from "@/components/pages/home/services";
 
 export default async function Home() {
   return (
@@ -15,6 +16,7 @@ export default async function Home() {
       <OpeningHome />
       <AboutHome />
       <TechsHome />
+      <ServicesHome />
       <OpeningProjectsHome />
       <AxvalHome />
       <SeLigaNaMidiaHome />
