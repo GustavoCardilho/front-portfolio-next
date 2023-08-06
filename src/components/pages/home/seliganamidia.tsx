@@ -30,7 +30,11 @@ export const SeLigaNaMidiaHome = async () => {
             O Se liga na mídia foi criado para a criação de conteudos
             jornalisticos produzido no itinerario formativo. Experimente:{" "}
             <strong className="text-white tracking-widest">
-              <a href="https://seliganamidia.xyz" target="_blank">
+              <a
+                href="https://seliganamidia.xyz"
+                target="_blank"
+                className="underline"
+              >
                 link
               </a>
             </strong>

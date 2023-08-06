@@ -6,6 +6,7 @@ import { ProjectsHome } from "@/components/pages/home/projects";
 import { TechsHome } from "@/components/pages/home/techs";
 import { OpeningProjectsHome } from "@/components/pages/home/openingProjects";
 import { SeLigaNaMidiaHome } from "@/components/pages/home/seliganamidia";
+import { Footer } from "@/components/footer/footer";
 
 export default async function Home() {
   return (
@@ -21,6 +22,7 @@ export default async function Home() {
         Repositorio
       </p>
       <ProjectsHome />
+      <Footer />
     </main>
   );
 }
