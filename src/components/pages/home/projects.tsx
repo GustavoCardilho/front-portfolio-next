@@ -18,7 +18,6 @@ import { Link } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 
-
 export const ProjectsHome = () => {
   const [repositoriesGithub, setRepositoriesGithub] = useState<
     IRepositoriesGithub[] | undefined
@@ -42,7 +41,6 @@ export const ProjectsHome = () => {
         );
 
         result.data[index].languageArray = Object.keys(language.data);
-
       });
 
       return result.data;
@@ -104,8 +102,6 @@ export const ProjectsHome = () => {
             </CardFooter>
           </Card>
         ))}
-
-
     </div>
   );
 };

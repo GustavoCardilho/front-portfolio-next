@@ -1,0 +1,94 @@
+root {
+  --swiper-theme-color: #fff !important;
+}
+
+.swiper {
+  width: 1200px;
+  height: 620px;
+  border: 1px dashed #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.092);
+}
+
+@media screen and (max-width: 1200px) {
+  .swiper {
+    width: 95vw;
+    height: auto;
+  }
+}
+
+.swiper-slide {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-button-prev {
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  margin-left: 10px;
+  user-select: none;
+}
+
+.swiper-button-next {
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  margin-left: 10px;
+  user-select: none;
+}
+
+.swiper-button-prev::after,
+.swiper-button-disabled::after {
+  color: transparent;
+  background: url("../../../../assets/ArrowLeft.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% !important;
+  padding: 0px 11px;
+  border-radius: 50%;
+  user-select: none;
+}
+.swiper-button-next::after,
+.swiper-button-disabled::before {
+  color: transparent;
+  background: url("../../../../assets/ArrowRight.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% !important;
+  padding: 0px 11px;
+  border-radius: 50%;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .swiper-button-prev,
+  .swiper-button-prev::after,
+  .swiper-button-disabled::after {
+    display: none;
+  }
+  .swiper-button-next,
+  .swiper-button-next::after,
+  .swiper-button-disabled::before {
+    display: none;
+  }
+}
+.swiper-pagination-bullet-active {
+  background: #fff !important;
+}
